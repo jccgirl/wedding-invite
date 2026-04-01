@@ -55,6 +55,13 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
   const name = document.getElementById("name").value.trim();
   const anzahl = document.getElementById("anzahl").value.trim();
   const nachricht = document.getElementById("nachricht").value.trim();
+  const submitButton = this.querySelector("button[type='submit']");
+  const successMessage = document.getElementById("successMessage");
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Senden...";
+  successMessage.style.display = "block";
+  successMessage.textContent = "Bitte warten, deine Nachricht wird gesendet...";
 
   console.log("Submitting RSVP:", { name, anzahl, nachricht });
 
@@ -68,15 +75,14 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
 
     console.log("Response type:", response.type);
 
-    // Bei no-cors: Request wird gesendet, aber wir sehen keine Details
-    document.getElementById("successMessage").textContent = "Danke! Deine Antwort wurde gesendet 🤍";
-    document.getElementById("successMessage").style.display = "block";
+    successMessage.textContent = "Danke! Deine Antwort wurde gesendet 🤍";
     this.reset();
-
   } catch (error) {
     console.error("RSVP Sheet Fehler:", error);
-    document.getElementById("successMessage").textContent = "Fehler beim Senden, bitte später erneut versuchen.";
-    document.getElementById("successMessage").style.display = "block";
+    successMessage.textContent = "Fehler beim Senden, bitte später erneut versuchen.";
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Antwort senden";
   }
 });
 
