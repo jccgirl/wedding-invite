@@ -57,42 +57,34 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
   const nachricht = document.getElementById("nachricht").value.trim();
   const submitButton = this.querySelector("button[type='submit']");
   const successMessage = document.getElementById("successMessage");
+  const formElement = this;
 
-  submitButton.disabled = true;
-  submitButton.textContent = "Senden...";
+  // Sofort Erfolgs-Nachricht zeigen (optimistic UI)
   successMessage.style.display = "block";
-  successMessage.textContent = "Deine Antwort wird versendet...";
+  successMessage.textContent = "Danke! Deine Antwort wurde gesendet 🤍";
+  submitButton.disabled = true;
+  submitButton.textContent = "✓ Gesendet";
 
-  const payload = new Blob([JSON.stringify({ name, anzahl, nachricht })], { type: "application/json" });
+  // Form sofort zurücksetzen
+  formElement.reset();
 
-  if (navigator.sendBeacon) {
-    const beaconResult = navigator.sendBeacon(SHEET_ENDPOINT, payload);
-    console.log("sendBeacon status:", beaconResult);
-
-    successMessage.textContent = "Danke! Deine Antwort wurde gesendet 🤍";
-    this.reset();
-    submitButton.disabled = false;
-    submitButton.textContent = "Antwort senden";
-    return;
-  }
-
-  try {
-    await fetch(SHEET_ENDPOINT, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, anzahl, nachricht })
-    });
-
-    successMessage.textContent = "Danke! Deine Antwort wurde gesendet 🤍";
-    this.reset();
-  } catch (error) {
-    console.error("RSVP Sheet Fehler:", error);
-    successMessage.textContent = "Fehler beim Senden, bitte später erneut versuchen.";
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = "Antwort senden";
-  }
+  // Im Hintergrund absenden (ohne auf Response warten)
+  fetch(SHEET_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, anzahl, nachricht })
+  }).catch(err => {
+    console.error("RSVP Fehler:", err);
+    successMessage.textContent = "Fehler beim Senden – bitte später nochmal versuchen.";
+  }).finally(() => {
+    // Nach 3 Sekunden Button wieder aktiv
+    setTimeout(() => {
+      submitButton.disabled = false;
+      submitButton.textContent = "Antwort senden";
+      successMessage.style.display = "none";
+    }, 3000);
+  });
 });
 
 // OPEN ENVELOPE + MUSIC
