@@ -61,19 +61,28 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
   submitButton.disabled = true;
   submitButton.textContent = "Senden...";
   successMessage.style.display = "block";
-  successMessage.textContent = "Bitte warten, deine Nachricht wird gesendet...";
+  successMessage.textContent = "Deine Antwort wird versendet...";
 
-  console.log("Submitting RSVP:", { name, anzahl, nachricht });
+  const payload = new Blob([JSON.stringify({ name, anzahl, nachricht })], { type: "application/json" });
+
+  if (navigator.sendBeacon) {
+    const beaconResult = navigator.sendBeacon(SHEET_ENDPOINT, payload);
+    console.log("sendBeacon status:", beaconResult);
+
+    successMessage.textContent = "Danke! Deine Antwort wurde gesendet 🤍";
+    this.reset();
+    submitButton.disabled = false;
+    submitButton.textContent = "Antwort senden";
+    return;
+  }
 
   try {
-    const response = await fetch(SHEET_ENDPOINT, {
+    await fetch(SHEET_ENDPOINT, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, anzahl, nachricht })
     });
-
-    console.log("Response type:", response.type);
 
     successMessage.textContent = "Danke! Deine Antwort wurde gesendet 🤍";
     this.reset();
