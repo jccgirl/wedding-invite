@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hochzeit A & J</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop autoplay>
+    <source src="assets/music/song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- MUSIC BUTTON -->
+  <button class="music-btn" id="musicBtn" aria-label="Musik umschalten">🔇</button>
+<div id="roseContainer"></div>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <h1>Hochzeit von</h1>
+  <h2 id="welcomeText"><span class="hero-gold">Mohammad Aladin</span> & <span class="hero-gold">Jasmin</span></h2>
+  <p class="event-date">02.05.26</p>
+
+  <div class="countdown" id="countdown">
+    <div class="time-part"><span id="days">00</span><small>Tage</small></div>
+    <div class="time-part"><span id="hours">00</span><small>Stunden</small></div>
+    <div class="time-part"><span id="minutes">00</span><small>Minuten</small></div>
+    <div class="time-part"><span id="seconds">00</span><small>Sekunden</small></div>
+  </div>
+
+  <button class="open-btn" onclick="openInvite()">Einladung öffnen</button>
+</div>
+
+<!-- CONTENT -->
+<div id="content" class="hidden">
+  <div class="container">
+
+    <div class="summary-card">
+      <p class="event-summary-main">Hochzeit von</p>
+      <p class="event-summary-main" style="color: #c6a86b;"> Mohammad Aladin & Jasmin</p>
+      <p class="event-summary">Samstag, 02.05.2026</p>
+      <p class="event-summary">Beginn 16 Uhr</p>
+      <p class="event-summary">LifeGarden</p>
+    </div>
+
+    <div class="card fade-in">
+      <h3>Einladung</h3>
+      <p>Wir laden dich herzlich ein, diesen besonderen Tag mit uns zu feiern 🤍</p>
+    </div>
+
+    <div class="card fade-in delay">
+      <h3>Ablauf</h3>
+      <p>16:00 - Empfang der Gäste</p>
+      <p>17:00 - Einlauf</p>
+      <p>18:00 - Gebet und Essen</p>
+      <p>19:00 - Programm</p>
+      <p>20:30 - Dessert</p>
+      <p>21:15 - Sparkle Exit</p>
+      <p style="font-size: 0.9rem; margin-top: 12px; color: #666;"> Die Uhrzeiten sind ungefähr und können leicht variieren. Männer und Frauen sind getrennt.</p>
+    </div>
+
+    <div class="card fade-in delay2">
+      <h3>Ort</h3>
+      <div class="location-block">
+        <p class="location-name">LifeGarden Restaurant/Cafe</p>
+        <p class="location-address">Kelterstraße 90, 71394 Kernen im Remstal</p>
+        <p class="location-note">Bitte nicht den Feldweg nehmen. Parkplätze befinden sich auf der Straße und im Besucherbereich.</p>
+      </div>
+      <iframe src="https://maps.google.com/maps?q=LifeGarden%20Restaurant/Cafe,%20Kelterstraße%2090,%2071394%20Kernen%20im%20Remstal&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <div class="card fade-in delay3">
+      <h3>Dresscode</h3>
+      <p>Wir freuen uns, euch an unserem besonderen Tag zu sehen! Bitte erscheint in festlicher, eleganter Kleidung – lasst uns gemeinsam diesen besonderen Moment feiern ✨</p>
+    </div>
+
+    <div class="card fade-in delay4">
+      <h3>Rückmeldung</h3>
+
+      <form id="rsvpForm">
+        <input type="text" id="name" placeholder="Dein Name" required>
+
+        <input type="number" id="anzahl"
+          placeholder="Anzahl der Personen (inkl. dir – nur eingeladene Personen)" required>
+
+        <textarea id="nachricht" placeholder="Nachricht"></textarea>
+
+        <button type="submit">Antwort senden</button>
+
+        <div class="success" id="successMessage">
+          Danke für deine Rückmeldung 🤍
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>✨ Hochzeit von Aladin & Jasmin • 02.05.26</p>
+      <p>Wir freuen uns auf euch. Danke, dass ihr diesen Tag mit uns teilt.</p>
+    </div>
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
