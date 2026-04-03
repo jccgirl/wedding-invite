@@ -53,7 +53,6 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
   e.preventDefault();
 
   const name = document.getElementById("name").value.trim();
-  const anzahl = document.getElementById("anzahl").value.trim();
   const nachricht = document.getElementById("nachricht").value.trim();
   const submitButton = this.querySelector("button[type='submit']");
   const successMessage = document.getElementById("successMessage");
@@ -73,7 +72,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
     method: "POST",
     mode: "no-cors",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, anzahl, nachricht })
+    body: JSON.stringify({ name, nachricht })
   }).catch(err => {
     console.error("RSVP Fehler:", err);
     successMessage.textContent = "Fehler beim Senden – bitte später nochmal versuchen.";
